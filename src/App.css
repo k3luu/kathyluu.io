@@ -1,14 +1,31 @@
 .App {
-  text-align: center;
 }
 
 .App-header {
-  background-color: #0c0d0e;
-  min-height: 50vh;
+  min-height: 100vh;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(40px + 2vmin);
-  color: white;
+  background-color: #0c0d0e;
+  color: #fff;
+  text-align: center;
+}
+
+.header__bezier {
+  position: absolute;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0 auto;
+}
+
+.main__content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 400px 0;
 }
