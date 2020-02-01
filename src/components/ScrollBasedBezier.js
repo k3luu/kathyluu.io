@@ -87,7 +87,7 @@ class ScrollArea extends React.PureComponent {
 
   render() {
     return (
-      <div ref={node => (this.node = node)}>
+      <div className="header__bezier" ref={node => (this.node = node)}>
         {this.props.children(this.state)}
       </div>
     );
@@ -109,10 +109,7 @@ const BezierCurve = ({
   fill = 'white'
 }) => {
   return (
-    <svg
-      className="header__bezier"
-      viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
-    >
+    <svg viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
       <path
         d={`
           M ${startPoint}
@@ -143,20 +140,22 @@ const ScrollBasedBezier = ({ headerHeight }) => (
       // By setting a relatively small ScrollArea height,
       // we get to see the fully-curved version for a bit
       // before the flattening starts :D
-      window.innerHeight * 0.5
+      300 * 0.55
     }
   >
     {({ scrollRatio }) => {
       // Hardcoding these values since this component
       // isn't meant to be reusable.
-      const viewBoxWidth = 300;
+      const viewBoxWidth = 500;
       const viewBoxHeight = 300;
 
-      const startPointY = getInterpolatedValue(300, 0, scrollRatio);
+      console.log('scroll area', scrollRatio);
 
-      const firstControlPointY = getInterpolatedValue(-100, 0, scrollRatio);
+      const startPointY = getInterpolatedValue(250, 0, scrollRatio);
 
-      const secondControlPointY = getInterpolatedValue(450, 0, scrollRatio);
+      const firstControlPointY = getInterpolatedValue(-50, 0, scrollRatio);
+
+      const secondControlPointY = getInterpolatedValue(550, 0, scrollRatio);
 
       const endPointY = 0;
 
@@ -165,9 +164,9 @@ const ScrollBasedBezier = ({ headerHeight }) => (
           viewBoxWidth={viewBoxWidth}
           viewBoxHeight={viewBoxHeight}
           startPoint={[0, startPointY]}
-          firstControlPoint={[100, firstControlPointY]}
-          secondControlPoint={[200, secondControlPointY]}
-          endPoint={[300, endPointY]}
+          firstControlPoint={[200, firstControlPointY]}
+          secondControlPoint={[300, secondControlPointY]}
+          endPoint={[500, endPointY]}
         />
       );
     }}

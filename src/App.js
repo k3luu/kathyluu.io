@@ -5,14 +5,14 @@ import ScrollBasedBezier from './components/ScrollBasedBezier';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">Hi, I'm Kathy...</header>
+      <header className="App-header">Hi, I'm Kathy</header>
 
-      <ScrollBasedBezier headerHeight={55} />
+      <ScrollBasedBezier headerHeight={10} />
 
       <div className="main__content">
         <p>
-          ...And I'm a frontend engineer. I've used mainly React in my work but
-          by no means would I call myself an expert. Currently, I work at{' '}
+          And I'm a frontend engineer. I've used mainly React in my work but by
+          no means would I call myself an expert. Currently, I work at{' '}
           <a href="https://www.doctor.com" target="_blank">
             Doctor.com
           </a>

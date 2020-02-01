@@ -5,13 +5,13 @@
   min-height: 100vh;
   margin: 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   font-size: calc(40px + 2vmin);
-  background-color: #0c0d0e;
+  background: linear-gradient(120deg, #cf779c 0%, #020202 100%);
   color: #fff;
   text-align: center;
+  padding-top: 200px;
+  box-sizing: border-box;
 }
 
 .header__bezier {
@@ -20,7 +20,7 @@
   box-sizing: border-box;
   left: 0;
   right: 0;
-  top: 0;
+  top: 30%;
   margin: 0 auto;
 }
 
