@@ -4,7 +4,7 @@ html {
 
 body {
   font-size: 1.4rem;
-  border: 10px solid pink;
+  border: 10px solid #e2bfce;
 }
 
 h1 {
@@ -24,7 +24,7 @@ h3 {
   display: flex;
   justify-content: center;
   font-size: calc(40px + 2vmin);
-  background: linear-gradient(120deg, #cf779c 0%, #020202 100%);
+  background: linear-gradient(120deg, #775c67 0%, #e2bfce 100%);
   color: #fff;
   text-align: center;
   padding-top: 200px;

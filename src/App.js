@@ -11,11 +11,11 @@ function App() {
       </header>
 
       <div className="main__content">
-        <h1>I'm Kathy.</h1>
+        <h1>i'm kathy.</h1>
         <p>
           I am a software engineer based in San Jose, California. I enjoy
-          working with React on the front end. I am currently employed at
-          Intuit, Inc. in Mountain View. Oh, and I have a dog; her name is Pim.
+          working with React on the front end. Oh, and I have a dog; her name is
+          Pim.
         </p>
 
         <h3>contact</h3>
