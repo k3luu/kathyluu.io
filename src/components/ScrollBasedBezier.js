@@ -156,7 +156,7 @@ const ScrollBasedBezier = ({
     }
   >
     {({ scrollRatio }) => {
-      console.log('scroll area', scrollRatio);
+      // console.log('scroll area', scrollRatio);
 
       const startPointY = getInterpolatedValue(
         startInterpolateY,

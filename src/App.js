@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import breakpoint from 'styled-components-breakpoint';
+// import breakpoint from 'styled-components-breakpoint';
 
 import './App.css';
 import ScrollBasedBezier from './components/ScrollBasedBezier';
 
 const Form = styled.form`
   width: 100%;
-
-  ${breakpoint('sm')`
-      width: 500px;
-      padding-left: 40px;  
-  `};
-
-  ${breakpoint('md')`
-      width: 600px;  
-  `};
+  margin: 20px 0;
 `;
 
 const TextSection = styled.div`
@@ -25,46 +17,38 @@ const TextSection = styled.div`
 `;
 
 const TextBox = styled.div`
-  color: ${(props) => (props.active ? '#08708a' : '#032b2f')};
+  color: ${(props) => (props.active ? '#3208ff' : '#000')};
   flex-grow: 1;
   margin: 10px;
   position: relative;
   height: 70px;
-
-  &:hover {
-    color: #08708a;
-  }
 `;
 
 const TextLabel = styled.label`
-  font-size: ${(props) => (props.active ? '8px' : '12px')};
+  font-size: ${(props) => (props.active ? '10px' : '12px')};
+  font-weight: 500;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  transition: 0.2s;
   position: absolute;
   width: 100%;
-  bottom: ${(props) => (props.active ? '65px' : '40px')};
+  bottom: ${(props) => (props.active ? '75px' : '43px')};
+  left: ${(props) => (props.active ? '0' : '10px')};
   text-align: left;
   cursor: text;
+  transition: 0.2s;
 `;
 
 const TextField = styled.input`
-  border: 0;
-  border-bottom: ${(props) =>
-    props.error ? '2px solid red' : '1px solid #032b2f'};
+  border: ${(props) => (props.error ? '2px solid red' : '2px solid #9c9c9e')};
+  border-radius: 4px;
   font-size: 14px;
   box-sizing: border-box;
-  padding: 10px 1px;
+  padding: 10px;
   width: 100%;
-  transition: 0.2s;
+  outline: 0;
 
   &:focus {
-    border-bottom: 2px solid #08708a;
-    outline: 0;
-  }
-
-  &:hover {
-    border-bottom: 2px solid #08708a;
+    border: 2px solid #3208ff;
   }
 `;
 
@@ -132,6 +116,17 @@ function App() {
     setError(validationObj);
   }
 
+  function checkValidation(validation) {
+    let valid = true;
+
+    for (let key in validation) {
+      if (error[key].dirty) valid = error[key].valid ? valid : false;
+      else valid = false;
+    }
+
+    return valid;
+  }
+
   function handleValidation(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -144,19 +139,13 @@ function App() {
     else validationObj[name].valid = value !== '';
 
     setError(validationObj);
-
-    // this.setState({
-    //   error: validationObj,
-    //   submitValidation: this.checkValidation(validationObj)
-    // });
+    setSubmitValidation(checkValidation(validationObj));
   }
-
-  console.log(error);
 
   return (
     <div className="App">
       <header className="App-header">
-        oh hello,
+        <h1>oh hello</h1>
         <ScrollBasedBezier
           fill="#d02b6e"
           startInterpolateY={100}
@@ -171,6 +160,9 @@ function App() {
 
       <div className="main__content">
         <h1>i'm kathy.</h1>
+        <br />
+        <br />
+        <br />
         <h2>
           i'm a software engineer based in san jose, california. i enjoy working
           with react on the front end. oh, and i have a dog; her name is pim.
@@ -187,10 +179,11 @@ function App() {
           <div>2017 – 2020</div>
         </div>
 
-        <h3>projects</h3>
+        <h3>other work</h3>
         <div>Two Half-Hitches</div>
         <div>Murakami Wedding</div>
 
+        <h3>get in touch</h3>
         <Form
           name="contact"
           method="POST"
@@ -200,10 +193,10 @@ function App() {
         >
           <input type="hidden" name="form-name" value="contact" />
           <TextSection>
-            <TextBox active={error['name'].focus || !!error['name'].value}>
+            <TextBox active={error.name.focus}>
               <TextLabel
                 htmlFor="name"
-                active={error['name'].focus || !!error['name'].value}
+                active={error.name.focus || !!error.name.value}
               >
                 Name
               </TextLabel>
@@ -212,15 +205,15 @@ function App() {
                 name="name"
                 type="text"
                 onChange={handleValidation}
-                error={!error['name'].valid}
+                error={!error.name.valid}
                 onFocus={onFocus}
                 onBlur={onBlur}
               />
             </TextBox>
-            <TextBox active={error['email'].focus || !!error['email'].value}>
+            <TextBox active={error.email.focus}>
               <TextLabel
                 htmlFor="email"
-                active={error['email'].focus || !!error['email'].value}
+                active={error.email.focus || !!error.email.value}
               >
                 Email
               </TextLabel>
@@ -229,7 +222,7 @@ function App() {
                 name="email"
                 type="email"
                 onChange={handleValidation}
-                error={!error['email'].valid}
+                error={!error.email.valid}
                 onFocus={onFocus}
                 onBlur={onBlur}
               />
@@ -241,12 +234,10 @@ function App() {
           </label>
 
           <MessageBox>
-            <TextBox
-              active={error['message'].focus || !!error['message'].value}
-            >
+            <TextBox active={error.message.focus}>
               <TextLabel
                 htmlFor="message"
-                active={error['message'].focus || !!error['message'].value}
+                active={error.message.focus || !!error.message.value}
               >
                 Message
               </TextLabel>
@@ -254,7 +245,7 @@ function App() {
                 id="message"
                 name="message"
                 label="Message"
-                error={!error['message'].valid}
+                error={!error.message.valid}
                 onChange={handleValidation}
                 onFocus={onFocus}
                 onBlur={onBlur}

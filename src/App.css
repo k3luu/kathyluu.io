@@ -6,7 +6,6 @@
   min-height: 500px;
   display: flex;
   justify-content: center;
-  font-size: calc(40px + 2vmin);
   background: linear-gradient(120deg, #bd4576 0%, #e2bfce 100%);
   color: #fff;
   text-align: center;
@@ -28,6 +27,6 @@
 .main__content {
   max-width: 600px;
   margin: 0 auto;
-  padding: 200px 10px 1000px;
+  padding: 60px 10px 1000px;
   text-align: center;
 }
