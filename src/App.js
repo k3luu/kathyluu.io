@@ -1,9 +1,34 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 // import breakpoint from 'styled-components-breakpoint';
 
-import './App.css';
 import ScrollBasedBezier from './components/ScrollBasedBezier';
+
+const Header = styled.header`
+  height: 70vh;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(120deg, #bd4576 0%, #e2bfce 100%);
+  color: #fff;
+  text-align: center;
+  padding-top: 200px;
+  box-sizing: border-box;
+  position: relative;
+
+  h1 {
+    color: #fff;
+  }
+`;
+
+const Content = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 10px 100px;
+  text-align: center;
+`;
 
 const Form = styled.form`
   width: 100%;
@@ -27,8 +52,8 @@ const TextBox = styled.div`
 const TextLabel = styled.label`
   font-size: ${(props) => (props.active ? '10px' : '12px')};
   font-weight: 500;
+  text-transform: lowercase;
   letter-spacing: 0.6px;
-  text-transform: uppercase;
   position: absolute;
   width: 100%;
   bottom: ${(props) => (props.active ? '75px' : '43px')};
@@ -62,6 +87,22 @@ const MessageBox = styled.div`
   }
 `;
 
+const TextArea = styled.textarea`
+  border: ${(props) => (props.error ? '2px solid red' : '2px solid #9c9c9e')};
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  outline: 0;
+  height: 100px;
+  resize: none;
+
+  &:focus {
+    border: 2px solid #3208ff;
+  }
+`;
+
 const Button = styled.button`
   color: ${(props) => (props.disabled ? 'rgba(0, 0, 0, 0.26)' : '#fff')};
   background: ${(props) =>
@@ -71,9 +112,42 @@ const Button = styled.button`
   margin-top: 50px;
   padding: 10px 20px;
   font-weight: bold;
-  text-transform: uppercase;
   transition: 0.2s ease;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+`;
+
+const ConnectSection = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+
+  div {
+    background-color: pink;
+    border-radius: 100px;
+    height: 40px;
+    width: 40px;
+    margin: 10px;
+
+    svg {
+      height: 20px;
+      width: 21px !important;
+      margin: 10px;
+
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+  svg {
+    height: 40px;
+    width: 40px !important;
+    margin: 10px;
+
+    path {
+      fill: pink;
+    }
+  }
 `;
 
 const validateEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -143,8 +217,8 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <>
+      <Header>
         <h1>oh hello</h1>
         <ScrollBasedBezier
           fill="#d02b6e"
@@ -156,9 +230,9 @@ function App() {
           endpointX={1300}
         />
         <ScrollBasedBezier />
-      </header>
+      </Header>
 
-      <div className="main__content">
+      <Content>
         <h1>i'm kathy.</h1>
         <br />
         <br />
@@ -208,6 +282,7 @@ function App() {
                 error={!error.name.valid}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                required
               />
             </TextBox>
             <TextBox active={error.email.focus}>
@@ -225,6 +300,7 @@ function App() {
                 error={!error.email.valid}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                required
               />
             </TextBox>
           </TextSection>
@@ -241,7 +317,7 @@ function App() {
               >
                 Message
               </TextLabel>
-              <TextField
+              <TextArea
                 id="message"
                 name="message"
                 label="Message"
@@ -249,16 +325,22 @@ function App() {
                 onChange={handleValidation}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                required
               />
             </TextBox>
           </MessageBox>
 
-          <Button type="submit" disabled={!submitValidation}>
-            Send
-          </Button>
+          <Button type="submit">send</Button>
         </Form>
-      </div>
-    </div>
+
+        <ConnectSection>
+          <div>
+            <FontAwesomeIcon icon={faLinkedinIn} />
+          </div>
+          <FontAwesomeIcon icon={faGithub} />
+        </ConnectSection>
+      </Content>
+    </>
   );
 }
 

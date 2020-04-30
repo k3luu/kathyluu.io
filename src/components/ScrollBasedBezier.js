@@ -1,4 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const BezierHeader = styled.div`
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  bottom: -20px;
+  margin: 0 auto;
+`;
 
 const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
 
@@ -87,9 +98,9 @@ class ScrollArea extends React.PureComponent {
 
   render() {
     return (
-      <div className="header__bezier" ref={(node) => (this.node = node)}>
+      <BezierHeader ref={(node) => (this.node = node)}>
         {this.props.children(this.state)}
-      </div>
+      </BezierHeader>
     );
   }
 }
