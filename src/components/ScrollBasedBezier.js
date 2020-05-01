@@ -7,8 +7,15 @@ const BezierHeader = styled.div`
   box-sizing: border-box;
   left: 0;
   right: 0;
-  bottom: -20px;
+  bottom: -18px;
   margin: 0 auto;
+
+  &.bezier + .bezier {
+    bottom: -22px;
+    left: -2px;
+    right: -2px;
+    width: calc(100% + 4px);
+  }
 `;
 
 const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
@@ -82,7 +89,7 @@ class ScrollArea extends React.PureComponent {
   handleScroll(ev) {
     const { topBuffer, areaHeight } = this.props;
 
-    const windowHeight = window.innerHeight;
+    // const windowHeight = window.innerHeight;
     const boundingBox = this.node.getBoundingClientRect();
 
     const distanceToTop = boundingBox.top - topBuffer;
@@ -98,7 +105,7 @@ class ScrollArea extends React.PureComponent {
 
   render() {
     return (
-      <BezierHeader ref={(node) => (this.node = node)}>
+      <BezierHeader className="bezier" ref={(node) => (this.node = node)}>
         {this.props.children(this.state)}
       </BezierHeader>
     );

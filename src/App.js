@@ -150,7 +150,7 @@ const ConnectSection = styled.div`
   }
 `;
 
-const validateEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function validationObj() {
   this.dirty = false;
@@ -167,9 +167,6 @@ function App() {
   };
 
   const [submitValidation, setSubmitValidation] = useState(false);
-  const [nameVal, setNameVal] = useState(new validationObj());
-  const [emailVal, setEmailVal] = useState(new validationObj());
-  const [msgVal, setMsgVal] = useState(new validationObj());
   const [error, setError] = useState(tempErr);
 
   function onFocus(e) {
@@ -254,8 +251,25 @@ function App() {
         </div>
 
         <h3>other work</h3>
-        <div>Two Half-Hitches</div>
-        <div>Murakami Wedding</div>
+        <div>
+          <a
+            href="https://twohalfhitches.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Two Half-Hitches
+          </a>
+        </div>
+        <br />
+        <div>
+          <a
+            href="https://murakami-wedding.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Murakami Wedding
+          </a>
+        </div>
 
         <h3>get in touch</h3>
         <Form
