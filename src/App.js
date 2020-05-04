@@ -384,7 +384,10 @@ function App() {
           </MessageBox>
 
           <div id="contact-recaptcha"></div>
-          <div class="g-recaptcha" data-sitekey={SITE_RECAPTCHA_KEY}></div>
+          <div
+            className="g-recaptcha"
+            data-sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
+          ></div>
 
           <Button type="submit">send</Button>
         </Form>
