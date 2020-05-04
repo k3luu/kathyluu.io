@@ -34,6 +34,10 @@ const Content = styled.div`
 const Form = styled.form`
   width: 100%;
   margin: 20px 0;
+
+  div#g-recaptcha > div {
+    margin: 20px auto;
+  }
 `;
 
 const TextSection = styled.div`
@@ -195,6 +199,7 @@ function App() {
   };
 
   const [error, setError] = useState(tempErr);
+  const [recaptcha, setRecaptcha] = useState(null);
 
   function onFocus(e) {
     const name = e.target.name;
@@ -233,18 +238,21 @@ function App() {
     validationObj[name].dirty = true;
     validationObj[name].value = value === '' ? null : value;
 
-    if (name === 'email') validationObj[name].valid = validateEmail.test(value);
-    else validationObj[name].valid = value !== '';
+    if (name === 'email') {
+      validationObj[name].valid = validateEmail.test(value);
+    } else {
+      validationObj[name].valid = value !== '';
+    }
 
     setError(validationObj);
   }
 
   function verifyCallback(response) {
-    console.log('response', response);
+    setRecaptcha(setRecaptcha);
   }
 
   function callback() {
-    console.log('Done!!!');
+    console.log('Recaptcha loaded!');
   }
 
   function handleSubmit(e) {
@@ -255,14 +263,12 @@ function App() {
       values[key] = error[key].value;
     }
 
-    console.log('<= your recaptcha token');
-
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({
         'form-name': 'contact',
-        'g-recaptcha-response': true,
+        'g-recaptcha-response': recaptcha,
         ...values,
       }),
     })
@@ -398,16 +404,12 @@ function App() {
             </TextBox>
           </MessageBox>
 
-          <div
-            className="g-recaptcha"
-            data-sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
-          ></div>
-
           <Recaptcha
             sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
             render="explicit"
             verifyCallback={verifyCallback}
             onloadCallback={callback}
+            badge="inline"
           />
 
           <Button type="submit">send</Button>
