@@ -299,7 +299,6 @@ function App() {
         <Form
           name="contact"
           method="POST"
-          action="/success"
           data-netlify="true"
           data-netlify-recaptcha="true"
         >
