@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
-// import breakpoint from 'styled-components-breakpoint';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 import ScrollBasedBezier from './components/ScrollBasedBezier';
 
@@ -47,6 +47,17 @@ const TextBox = styled.div`
   margin: 10px;
   position: relative;
   height: 70px;
+
+  svg {
+    display: ${(props) => (props.error && !props.active ? 'block' : 'none')};
+    position: absolute;
+    right: 10px;
+    top: 13px;
+
+    path {
+      fill: red;
+    }
+  }
 `;
 
 const TextLabel = styled.label`
@@ -121,6 +132,16 @@ const ConnectSection = styled.div`
   justify-content: center;
   margin-top: 5em;
 
+  a:hover {
+    div {
+      background-color: blue;
+    }
+
+    svg#github path {
+      fill: blue;
+    }
+  }
+
   div {
     background-color: pink;
     border-radius: 100px;
@@ -150,7 +171,7 @@ const ConnectSection = styled.div`
   }
 `;
 
-const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function validationObj() {
   this.dirty = false;
@@ -166,7 +187,6 @@ function App() {
     message: new validationObj(),
   };
 
-  const [submitValidation, setSubmitValidation] = useState(false);
   const [error, setError] = useState(tempErr);
 
   function onFocus(e) {
@@ -187,16 +207,16 @@ function App() {
     setError(validationObj);
   }
 
-  function checkValidation(validation) {
-    let valid = true;
+  // function checkValidation(validation) {
+  //   let valid = true;
 
-    for (let key in validation) {
-      if (error[key].dirty) valid = error[key].valid ? valid : false;
-      else valid = false;
-    }
+  //   for (let key in validation) {
+  //     if (error[key].dirty) valid = error[key].valid ? valid : false;
+  //     else valid = false;
+  //   }
 
-    return valid;
-  }
+  //   return valid;
+  // }
 
   function handleValidation(e) {
     const name = e.target.name;
@@ -210,7 +230,6 @@ function App() {
     else validationObj[name].valid = value !== '';
 
     setError(validationObj);
-    setSubmitValidation(checkValidation(validationObj));
   }
 
   return (
@@ -281,7 +300,7 @@ function App() {
         >
           <input type="hidden" name="form-name" value="contact" />
           <TextSection>
-            <TextBox active={error.name.focus}>
+            <TextBox active={error.name.focus} error={!error.name.valid}>
               <TextLabel
                 htmlFor="name"
                 active={error.name.focus || !!error.name.value}
@@ -298,8 +317,9 @@ function App() {
                 onBlur={onBlur}
                 required
               />
+              <FontAwesomeIcon icon={faExclamationTriangle} />
             </TextBox>
-            <TextBox active={error.email.focus}>
+            <TextBox active={error.email.focus} error={!error.email.valid}>
               <TextLabel
                 htmlFor="email"
                 active={error.email.focus || !!error.email.value}
@@ -316,6 +336,7 @@ function App() {
                 onBlur={onBlur}
                 required
               />
+              <FontAwesomeIcon icon={faExclamationTriangle} />
             </TextBox>
           </TextSection>
 
@@ -324,7 +345,7 @@ function App() {
           </label>
 
           <MessageBox>
-            <TextBox active={error.message.focus}>
+            <TextBox active={error.message.focus} error={!error.message.valid}>
               <TextLabel
                 htmlFor="message"
                 active={error.message.focus || !!error.message.value}
@@ -341,6 +362,7 @@ function App() {
                 onBlur={onBlur}
                 required
               />
+              <FontAwesomeIcon icon={faExclamationTriangle} />
             </TextBox>
           </MessageBox>
 
@@ -348,10 +370,22 @@ function App() {
         </Form>
 
         <ConnectSection>
-          <div>
-            <FontAwesomeIcon icon={faLinkedinIn} />
-          </div>
-          <FontAwesomeIcon icon={faGithub} />
+          <a
+            href="https://www.linkedin.com/in/kathy-luu/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div>
+              <FontAwesomeIcon icon={faLinkedinIn} />
+            </div>
+          </a>
+          <a
+            href="https://github.com/k3luu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon id="github" icon={faGithub} />
+          </a>
         </ConnectSection>
       </Content>
     </>

@@ -20,6 +20,15 @@ code {
     monospace;
 }
 
+a {
+  color: blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 h1,
 h2,
 h3,
@@ -49,6 +58,7 @@ button {
   letter-spacing: 1.2px;
 }
 
-input {
+input,
+textarea {
   font-family: 'Quando', serif;
 }
