@@ -35,7 +35,7 @@ const Form = styled.form`
   width: 100%;
   margin: 20px 0;
 
-  div#g-recaptcha > div {
+  .captcha {
     margin: 20px auto;
   }
 `;
@@ -248,7 +248,7 @@ function App() {
   }
 
   function verifyCallback(response) {
-    setRecaptcha(setRecaptcha);
+    setRecaptcha(response);
   }
 
   function callback() {
@@ -404,13 +404,15 @@ function App() {
             </TextBox>
           </MessageBox>
 
-          <Recaptcha
-            sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
-            render="explicit"
-            verifyCallback={verifyCallback}
-            onloadCallback={callback}
-            badge="inline"
-          />
+          <div className="captcha">
+            <Recaptcha
+              sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
+              render="explicit"
+              verifyCallback={verifyCallback}
+              onloadCallback={callback}
+              badge="inline"
+            />
+          </div>
 
           <Button type="submit">send</Button>
         </Form>
