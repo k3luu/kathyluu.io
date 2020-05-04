@@ -301,9 +301,8 @@ function App() {
           method="POST"
           action="/success"
           data-netlify="true"
-          data-netlify-honeypot="bot-field"
+          data-netlify-recaptcha="true"
         >
-          <input type="hidden" name="form-name" value="contact" />
           <TextSection>
             <TextBox active={error.name.focus} error={!error.name.valid}>
               <TextLabel
@@ -370,6 +369,8 @@ function App() {
               <FontAwesomeIcon icon={faExclamationTriangle} />
             </TextBox>
           </MessageBox>
+
+          <div data-netlify-recaptcha="true"></div>
 
           <Button type="submit">send</Button>
         </Form>
