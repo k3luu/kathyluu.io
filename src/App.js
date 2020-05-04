@@ -173,6 +173,12 @@ const ConnectSection = styled.div`
 
 const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const encode = (data) => {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
+};
+
 function validationObj() {
   this.dirty = false;
   this.valid = true;
@@ -230,6 +236,18 @@ function App() {
     else validationObj[name].valid = value !== '';
 
     setError(validationObj);
+  }
+
+  function handleSubmit(e) {
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({ 'form-name': 'contact', ...this.state }),
+    })
+      .then(() => alert('Success!'))
+      .catch((error) => alert(error));
+
+    e.preventDefault();
   }
 
   return (
@@ -299,10 +317,12 @@ function App() {
         <Form
           name="contact"
           method="POST"
-          data-netlify="true"
+          action="/success"
+          onSubmit={handleSubmit}
           data-netlify-recaptcha="true"
         >
           <input type="hidden" name="form-name" value="contact" />
+
           <TextSection>
             <TextBox active={error.name.focus} error={!error.name.valid}>
               <TextLabel
