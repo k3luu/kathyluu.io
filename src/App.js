@@ -36,7 +36,11 @@ const Form = styled.form`
   margin: 20px 0;
 
   .captcha {
-    margin: 20px auto;
+    margin-top: 100px;
+
+    > div#g-recaptcha > div {
+      margin: 0 auto;
+    }
   }
 `;
 
