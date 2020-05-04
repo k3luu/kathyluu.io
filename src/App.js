@@ -319,7 +319,7 @@ function App() {
         </div>
 
         <h3>get in touch</h3>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} data-netlify-recaptcha="true">
           <TextSection>
             <TextBox active={error.name.focus} error={!error.name.valid}>
               <TextLabel
