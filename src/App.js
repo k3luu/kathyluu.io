@@ -239,21 +239,22 @@ function App() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault();
     let values = {};
 
     for (let key of error) {
       values[key] = error[key].value;
     }
-    console.log(values);
-    e.preventDefault();
-    alert(values);
 
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({ 'form-name': 'contact', ...values }),
     })
-      .then(() => alert('Success!'))
+      .then(() => {
+        e.preventDefault();
+        alert('Success!');
+      })
       .catch((error) => alert(error));
 
     e.preventDefault();
