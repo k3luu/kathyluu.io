@@ -302,6 +302,7 @@ function App() {
           data-netlify="true"
           data-netlify-recaptcha="true"
         >
+          <input type="hidden" name="form-name" value="contact" />
           <TextSection>
             <TextBox active={error.name.focus} error={!error.name.valid}>
               <TextLabel
