@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Recaptcha from 'react-recaptcha';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -238,6 +239,14 @@ function App() {
     setError(validationObj);
   }
 
+  function verifyCallback(response) {
+    console.log('response', response);
+  }
+
+  function callback() {
+    console.log('Done!!!');
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     let values = {};
@@ -251,7 +260,11 @@ function App() {
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({ 'form-name': 'contact', ...values }),
+      body: encode({
+        'form-name': 'contact',
+        'g-recaptcha-response': true,
+        ...values,
+      }),
     })
       .then(() => alert('Success!'))
       .catch((error) => alert(error));
@@ -389,6 +402,13 @@ function App() {
             className="g-recaptcha"
             data-sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
           ></div>
+
+          <Recaptcha
+            sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
+            render="explicit"
+            verifyCallback={verifyCallback}
+            onloadCallback={callback}
+          />
 
           <Button type="submit">send</Button>
         </Form>
