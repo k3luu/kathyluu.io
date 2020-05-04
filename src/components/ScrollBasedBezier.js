@@ -1,4 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const BezierHeader = styled.div`
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  bottom: -18px;
+  margin: 0 auto;
+
+  &.bezier + .bezier {
+    bottom: -22px;
+    left: -2px;
+    right: -2px;
+    width: calc(100% + 4px);
+  }
+`;
 
 const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
 
@@ -71,7 +89,7 @@ class ScrollArea extends React.PureComponent {
   handleScroll(ev) {
     const { topBuffer, areaHeight } = this.props;
 
-    const windowHeight = window.innerHeight;
+    // const windowHeight = window.innerHeight;
     const boundingBox = this.node.getBoundingClientRect();
 
     const distanceToTop = boundingBox.top - topBuffer;
@@ -87,9 +105,9 @@ class ScrollArea extends React.PureComponent {
 
   render() {
     return (
-      <div className="header__bezier" ref={(node) => (this.node = node)}>
+      <BezierHeader className="bezier" ref={(node) => (this.node = node)}>
         {this.props.children(this.state)}
-      </div>
+      </BezierHeader>
     );
   }
 }
@@ -106,7 +124,7 @@ const BezierCurve = ({
   firstControlPoint,
   secondControlPoint,
   endPoint,
-  fill = 'white',
+  fill,
 }) => {
   return (
     <svg viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
@@ -133,7 +151,19 @@ const BezierCurve = ({
  * It takes the `headerHeight` as a prop, so that we
  * can flatten it at the right moment.
  */
-const ScrollBasedBezier = ({ headerHeight }) => (
+const ScrollBasedBezier = ({
+  headerHeight = 10,
+  viewBoxWidth = 1200,
+  viewBoxHeight = 250,
+  startInterpolateY = 200,
+  firstControlPointX = 500,
+  firstInterpolateY = 0,
+  secondControlPointX = 700,
+  secondInterpolateY = 500,
+  endPointX = 1250,
+  endPointY = 0,
+  fill = 'white',
+}) => (
   <ScrollArea
     topBuffer={headerHeight}
     areaHeight={
@@ -144,29 +174,35 @@ const ScrollBasedBezier = ({ headerHeight }) => (
     }
   >
     {({ scrollRatio }) => {
-      // Hardcoding these values since this component
-      // isn't meant to be reusable.
-      const viewBoxWidth = 600;
-      const viewBoxHeight = 250;
+      // console.log('scroll area', scrollRatio);
 
-      console.log('scroll area', scrollRatio);
+      const startPointY = getInterpolatedValue(
+        startInterpolateY,
+        0,
+        scrollRatio
+      );
 
-      const startPointY = getInterpolatedValue(150, 0, scrollRatio);
+      const firstControlPointY = getInterpolatedValue(
+        firstInterpolateY,
+        0,
+        scrollRatio
+      );
 
-      const firstControlPointY = getInterpolatedValue(50, 0, scrollRatio);
-
-      const secondControlPointY = getInterpolatedValue(350, 0, scrollRatio);
-
-      const endPointY = 0;
+      const secondControlPointY = getInterpolatedValue(
+        secondInterpolateY,
+        0,
+        scrollRatio
+      );
 
       return (
         <BezierCurve
           viewBoxWidth={viewBoxWidth}
           viewBoxHeight={viewBoxHeight}
           startPoint={[0, startPointY]}
-          firstControlPoint={[200, firstControlPointY]}
-          secondControlPoint={[400, secondControlPointY]}
-          endPoint={[viewBoxWidth + 50, endPointY]}
+          firstControlPoint={[firstControlPointX, firstControlPointY]}
+          secondControlPoint={[secondControlPointX, secondControlPointY]}
+          endPoint={[endPointX, endPointY]}
+          fill={fill}
         />
       );
     }}
