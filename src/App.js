@@ -239,10 +239,19 @@ function App() {
   }
 
   function handleSubmit(e) {
+    let values = {};
+
+    for (let key of error) {
+      values[key] = error[key].value;
+    }
+    console.log(values);
+    e.preventDefault();
+    alert(values);
+
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({ 'form-name': 'contact', ...this.state }),
+      body: encode({ 'form-name': 'contact', ...values }),
     })
       .then(() => alert('Success!'))
       .catch((error) => alert(error));
@@ -314,15 +323,7 @@ function App() {
         </div>
 
         <h3>get in touch</h3>
-        <Form
-          name="contact"
-          method="POST"
-          action="/success"
-          onSubmit={handleSubmit}
-          data-netlify-recaptcha="true"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-
+        <Form onSubmit={handleSubmit}>
           <TextSection>
             <TextBox active={error.name.focus} error={!error.name.valid}>
               <TextLabel
@@ -363,10 +364,6 @@ function App() {
               <FontAwesomeIcon icon={faExclamationTriangle} />
             </TextBox>
           </TextSection>
-
-          <label style={{ visibility: 'hidden' }}>
-            Don’t fill this out if you're human: <input name="bot-field" />
-          </label>
 
           <MessageBox>
             <TextBox active={error.message.focus} error={!error.message.valid}>
