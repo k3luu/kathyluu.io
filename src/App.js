@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { ReCaptcha } from 'react-recaptcha-google';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -194,6 +195,11 @@ function App() {
   };
 
   const [error, setError] = useState(tempErr);
+  const contactCaptcha = useRef(null);
+
+  useEffect(() => {
+    contactCaptcha.reset();
+  });
 
   function onFocus(e) {
     const name = e.target.name;
@@ -236,6 +242,17 @@ function App() {
     else validationObj[name].valid = value !== '';
 
     setError(validationObj);
+  }
+
+  function onLoadRecaptcha() {
+    if (contactCaptcha) {
+      contactCaptcha.reset();
+    }
+  }
+
+  function verifyCallback(recaptchaToken) {
+    // Here you will get the final recaptchaToken!!!
+    console.log(recaptchaToken, '<= your recaptcha token');
   }
 
   function handleSubmit(e) {
@@ -383,11 +400,20 @@ function App() {
             </TextBox>
           </MessageBox>
 
-          <div id="contact-recaptcha"></div>
           <div
             className="g-recaptcha"
             data-sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
           ></div>
+
+          <ReCaptcha
+            ref={contactCaptcha}
+            size="normal"
+            data-theme="dark"
+            render="explicit"
+            sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
+            onloadCallback={onLoadRecaptcha}
+            verifyCallback={verifyCallback}
+          />
 
           <Button type="submit">send</Button>
         </Form>
