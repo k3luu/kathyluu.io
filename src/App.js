@@ -246,6 +246,8 @@ function App() {
       values[key] = error[key].value;
     }
 
+    console.log(grecaptcha.getResponse());
+
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -383,7 +385,7 @@ function App() {
             </TextBox>
           </MessageBox>
 
-          <div data-netlify-recaptcha="true"></div>
+          <div id="contact-recaptcha"></div>
 
           <Button type="submit">send</Button>
         </Form>

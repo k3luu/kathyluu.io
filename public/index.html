@@ -25,6 +25,14 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Kathy Luu</title>
+
+    <script type="text/javascript">
+      var onloadCallback = function () {
+        grecaptcha.render('contact-recaptcha', {
+          sitekey: SITE_RECAPTCHA_KEY,
+        });
+      };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -47,5 +55,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <script
+      src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+      async
+      defer
+    ></script>
   </body>
 </html>
