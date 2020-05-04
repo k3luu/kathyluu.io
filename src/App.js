@@ -242,7 +242,7 @@ function App() {
     e.preventDefault();
     let values = {};
 
-    for (let key of error) {
+    for (let key in error) {
       values[key] = error[key].value;
     }
 
@@ -251,13 +251,8 @@ function App() {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({ 'form-name': 'contact', ...values }),
     })
-      .then(() => {
-        e.preventDefault();
-        alert('Success!');
-      })
+      .then(() => alert('Success!'))
       .catch((error) => alert(error));
-
-    e.preventDefault();
   }
 
   return (
