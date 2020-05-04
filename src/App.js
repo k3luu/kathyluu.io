@@ -246,8 +246,6 @@ function App() {
       values[key] = error[key].value;
     }
 
-    console.log(grecaptcha.getResponse());
-
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -386,6 +384,7 @@ function App() {
           </MessageBox>
 
           <div id="contact-recaptcha"></div>
+          <div class="g-recaptcha" data-sitekey={SITE_RECAPTCHA_KEY}></div>
 
           <Button type="submit">send</Button>
         </Form>
