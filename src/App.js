@@ -408,17 +408,23 @@ function App() {
             </TextBox>
           </MessageBox>
 
-          <div className="captcha">
-            <Recaptcha
-              sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
-              render="explicit"
-              verifyCallback={verifyCallback}
-              onloadCallback={callback}
-              badge="inline"
-            />
-          </div>
+          {process.env.NODE_ENV === 'production' ? (
+            <div className="captcha">
+              <Recaptcha
+                sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
+                render="explicit"
+                verifyCallback={verifyCallback}
+                onloadCallback={callback}
+                badge="inline"
+              />
+            </div>
+          ) : (
+            ''
+          )}
 
-          <Button type="submit">send</Button>
+          <Button type="submit" disabled={!!recaptcha}>
+            send
+          </Button>
         </Form>
 
         <ConnectSection>
