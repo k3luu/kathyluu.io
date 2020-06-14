@@ -11,6 +11,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "acorn": "^7.1.1",
+    "gatsby-cli": "^2.12.45",
     "kind-of": "^6.0.3",
     "minimist": "^1.2.3",
     "react": "^16.12.0",

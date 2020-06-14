@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 import ScrollBasedBezier from './components/ScrollBasedBezier';
+import fancyPlants from './fancy-plants.png';
+import pottedPlant from './potted-plant.png';
 
 const Header = styled.header`
   height: 70vh;
   min-height: 500px;
   display: flex;
   justify-content: center;
-  background: linear-gradient(120deg, #bd4576 0%, #e2bfce 100%);
+  background: linear-gradient(120deg, #bb3139b8 0%, #ffced600 100%);
   color: #fff;
   text-align: center;
   padding-top: 200px;
   box-sizing: border-box;
   position: relative;
 
+  &:before {
+    content: '';
+    background: url("${fancyPlants}") no-repeat right;
+    background-size: contain;
+    position: absolute;
+    width: 550px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+
   h1 {
     color: #fff;
+    z-index: 1;
   }
 `;
 
@@ -42,7 +56,7 @@ const TextSection = styled.div`
 `;
 
 const TextBox = styled.div`
-  color: ${(props) => (props.active ? '#3208ff' : '#000')};
+  color: ${(props) => (props.active ? '#1d77cf' : '#000')};
   flex-grow: 1;
   margin: 10px;
   position: relative;
@@ -61,14 +75,17 @@ const TextBox = styled.div`
 `;
 
 const TextLabel = styled.label`
-  font-size: ${(props) => (props.active ? '10px' : '12px')};
+  // font-size: ${(props) => (props.active ? '10px' : '12px')};
+  font-size: 10px;
   font-weight: 500;
   text-transform: lowercase;
   letter-spacing: 0.6px;
   position: absolute;
   width: 100%;
-  bottom: ${(props) => (props.active ? '75px' : '43px')};
-  left: ${(props) => (props.active ? '0' : '10px')};
+  // bottom: ${(props) => (props.active ? '75px' : '43px')};
+  bottom: 75px;
+  // left: ${(props) => (props.active ? '0' : '10px')};
+  left: 0;
   text-align: left;
   cursor: text;
   transition: 0.2s;
@@ -84,7 +101,7 @@ const TextField = styled.input`
   outline: 0;
 
   &:focus {
-    border: 2px solid #3208ff;
+    border: 2px solid #1d77cf;
   }
 `;
 
@@ -110,7 +127,7 @@ const TextArea = styled.textarea`
   resize: none;
 
   &:focus {
-    border: 2px solid #3208ff;
+    border: 2px solid #1d77cf;
   }
 `;
 
@@ -143,7 +160,7 @@ const ConnectSection = styled.div`
   }
 
   div {
-    background-color: pink;
+    background-color: #ff3e49;
     border-radius: 100px;
     height: 40px;
     width: 40px;
@@ -166,7 +183,7 @@ const ConnectSection = styled.div`
     margin: 10px;
 
     path {
-      fill: pink;
+      fill: #ff3e49;
     }
   }
 `;
@@ -188,6 +205,12 @@ function App() {
   };
 
   const [error, setError] = useState(tempErr);
+
+  useEffect(() => {
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+  }, []);
 
   function onFocus(e) {
     const name = e.target.name;
@@ -226,18 +249,28 @@ function App() {
     validationObj[name].dirty = true;
     validationObj[name].value = value === '' ? null : value;
 
-    if (name === 'email') validationObj[name].valid = validateEmail.test(value);
-    else validationObj[name].valid = value !== '';
+    if (name === 'email') {
+      validationObj[name].valid = validateEmail.test(value);
+    } else {
+      validationObj[name].valid = value !== '';
+    }
 
     setError(validationObj);
   }
 
+  console.log(error);
   return (
     <>
       <Header>
-        <h1>oh hello</h1>
+        <h1>
+          oh hello,
+          {/* <span role="img" aria-label=":-)">
+            😊
+          </span> */}
+        </h1>
+
         <ScrollBasedBezier
-          fill="#d02b6e"
+          fill="#cc2e37"
           startInterpolateY={100}
           firstControlPointX={500}
           firstInterpolateY={-200}
@@ -254,11 +287,15 @@ function App() {
         <br />
         <br />
         <h2>
-          i'm a software engineer based in san jose, california. i enjoy working
-          with react on the front end. oh, and i have a dog; her name is pim.
+          i'm a software engineer based in the south bay area. i enjoy working
+          with react on the front end. also important, i have a dog; her name is
+          pim.
         </h2>
 
-        <h3>experience</h3>
+        <h3>
+          <img src={pottedPlant} className="menu__icon" alt="icon menu" />
+          experience
+        </h3>
         <div>
           <div>Intuit</div>
           <div>2020 – present</div>
@@ -269,7 +306,10 @@ function App() {
           <div>2017 – 2020</div>
         </div>
 
-        <h3>other work</h3>
+        <h3>
+          <img src={pottedPlant} className="menu__icon" alt="icon menu" />
+          other work
+        </h3>
         <div>
           <a
             href="https://twohalfhitches.com"
@@ -290,7 +330,11 @@ function App() {
           </a>
         </div>
 
-        <h3>get in touch</h3>
+        <h3>
+          <img src={pottedPlant} className="menu__icon" alt="icon menu" />
+          get in touch
+        </h3>
+
         <Form
           name="contact"
           method="POST"
