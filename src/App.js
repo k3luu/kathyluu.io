@@ -6,8 +6,8 @@ import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 import ScrollBasedBezier from './components/ScrollBasedBezier';
-import fancyPlants from './fancy-plants.png';
-import pottedPlant from './potted-plant.png';
+import fancyPlants from './fancy-plants.webp';
+import pottedPlant from './potted-plant.webp';
 
 const Header = styled.header`
   height: 70vh;
@@ -199,12 +199,6 @@ const ConnectSection = styled.div`
 
 const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const encode = (data) => {
-  return Object.keys(data)
-    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-    .join('&');
-};
-
 function validationObj() {
   this.dirty = false;
   this.valid = true;
@@ -246,17 +240,6 @@ function App() {
     setError(validationObj);
   }
 
-  // function checkValidation(validation) {
-  //   let valid = true;
-
-  //   for (let key in validation) {
-  //     if (error[key].dirty) valid = error[key].valid ? valid : false;
-  //     else valid = false;
-  //   }
-
-  //   return valid;
-  // }
-
   function handleValidation(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -282,36 +265,10 @@ function App() {
     console.log('Recaptcha loaded!');
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    let values = {};
-
-    for (let key in error) {
-      values[key] = error[key].value;
-    }
-
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': 'contact',
-        'g-recaptcha-response': recaptcha,
-        ...values,
-      }),
-    })
-      .then(() => alert('Success!'))
-      .catch((error) => alert(error));
-  }
-
   return (
     <>
       <Header>
-        <h1>
-          oh hello,
-          {/* <span role="img" aria-label=":-)">
-            😊
-          </span> */}
-        </h1>
+        <h1>oh hello,</h1>
 
         <ScrollBasedBezier
           fill="#cc2e37"
@@ -475,6 +432,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <title>LinkedIn</title>
             <div>
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
@@ -484,6 +442,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <title>Github</title>
             <FontAwesomeIcon id="github" icon={faGithub} />
           </a>
         </ConnectSection>

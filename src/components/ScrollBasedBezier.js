@@ -79,7 +79,7 @@ class ScrollArea extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
   }
 
   componentWillUnmount() {
