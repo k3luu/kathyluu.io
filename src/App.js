@@ -1,6 +1,5 @@
-import React, { useState, useEffect, lazy } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import styled from 'styled-components';
-import Recaptcha from 'react-recaptcha';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -198,6 +197,8 @@ const ConnectSection = styled.div`
     }
   }
 `;
+
+const renderLoader = () => <p>Loading...</p>;
 
 const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -410,15 +411,17 @@ function App() {
           </MessageBox>
 
           {process.env.NODE_ENV === 'production' ? (
-            <div className="captcha">
-              <RecaptchaComponent
-                sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
-                render="explicit"
-                verifyCallback={verifyCallback}
-                onloadCallback={callback}
-                badge="inline"
-              />
-            </div>
+            <Suspense fallback={renderLoader()}>
+              <div className="captcha">
+                <RecaptchaComponent
+                  sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
+                  render="explicit"
+                  verifyCallback={verifyCallback}
+                  onloadCallback={callback}
+                  badge="inline"
+                />
+              </div>{' '}
+            </Suspense>
           ) : (
             ''
           )}
