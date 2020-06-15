@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import styled from 'styled-components';
 import Recaptcha from 'react-recaptcha';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,8 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import ScrollBasedBezier from './components/ScrollBasedBezier';
 import fancyPlants from './fancy-plants.webp';
 import pottedPlant from './potted-plant.webp';
+
+const RecaptchaComponent = lazy(() => import('react-recaptcha'));
 
 const Header = styled.header`
   height: 70vh;
@@ -409,7 +411,7 @@ function App() {
 
           {process.env.NODE_ENV === 'production' ? (
             <div className="captcha">
-              <Recaptcha
+              <RecaptchaComponent
                 sitekey={process.env.REACT_APP_SITE_RECAPTCHA_KEY}
                 render="explicit"
                 verifyCallback={verifyCallback}
