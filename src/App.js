@@ -436,8 +436,8 @@ function App() {
             href="https://www.linkedin.com/in/kathy-luu/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
           >
-            <title>LinkedIn</title>
             <div>
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
@@ -446,8 +446,8 @@ function App() {
             href="https://github.com/k3luu"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Github"
           >
-            <title>Github</title>
             <FontAwesomeIcon id="github" icon={faGithub} />
           </a>
         </ConnectSection>
